@@ -30,9 +30,12 @@
       font-size: 32px;
       border: none;
       border-radius: 20px;
-      width: 250px;
-      height: 250px;
-      background-size: cover;
+      width: 60vw;
+      height: 60vw;
+      max-width: 250px;
+      max-height: 250px;
+      background-size: contain;
+      background-repeat: no-repeat;
       background-position: center;
       transition: transform 0.1s ease, box-shadow 0.1s ease;
       box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
@@ -126,13 +129,26 @@
     const shopButton = document.getElementById("shop");
     const mainButton = document.getElementById("mainButton");
     const clickPower = document.getElementById("clickPower");
+    const skinButtons = {
+      'Anton': document.getElementById("skinA"),
+      'Denis': document.getElementById("skinD")
+    };
 
     scoreLabel.textContent = score;
     shopButton.textContent = `Купить апгрейд (+1) (${price} очков)`;
     clickPower.textContent = `Очков за клик: ${upp}`;
 
-    if (currentSkin && ownedSkins[currentSkin]) {
-      setSkin(ownedSkins[currentSkin]);
+    // Отобразить купленные скины при загрузке
+    for (let skin in ownedSkins) {
+      if (skinButtons[skin]) {
+        skinButtons[skin].textContent = `${skin} ✅ Куплено`;
+      }
+    }
+
+    if (currentSkin) {
+      mainButton.style.backgroundImage = `url('${currentSkin}')`;
+      mainButton.textContent = "";
+      mainButton.style.backgroundColor = "white";
     }
 
     // Всплывающий +1
@@ -166,7 +182,7 @@
     }
 
     function buyOrSelectSkin(name, cost, image) {
-      const button = document.getElementById("skin" + name[0]);
+      const button = skinButtons[name];
       if (!ownedSkins[name]) {
         if (score >= cost) {
           score -= cost;
@@ -186,7 +202,6 @@
       mainButton.style.backgroundImage = `url('${image}')`;
       mainButton.textContent = "";
       mainButton.style.backgroundColor = "white";
-      mainButton.style.pointerEvents = "auto";
       currentSkin = image;
     }
 
