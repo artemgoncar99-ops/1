@@ -1,217 +1,222 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Кликер игра</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to bottom, #282c34, #1a1a1a);
-      color: white;
-      text-align: center;
-      height: 100vh;
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      overflow: hidden;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Кликер игра</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to bottom, #282c34, #1a1a1a);
+  color: white;
+  text-align: center;
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
 
-    #score {
-      font-size: 40px;
-      margin-top: 20px;
-    }
+#score {
+  font-size: 40px;
+  margin-top: 20px;
+}
 
-    #mainButton {
-      margin: 0 auto;
-      background: green;
-      color: white;
-      font-size: 32px;
-      border: none;
-      border-radius: 20px;
-      width: 60vw;
-      height: 60vw;
-      max-width: 250px;
-      max-height: 250px;
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
-      transition: transform 0.1s ease, box-shadow 0.1s ease;
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-      cursor: pointer;
-      position: relative;
-      overflow: visible;
-    }
+#mainButton {
+  margin: 0 auto;
+  background: green;
+  color: white;
+  font-size: 32px;
+  border: none;
+  border-radius: 20px;
+  width: 60vw;
+  height: 60vw;
+  max-width: 250px;
+  max-height: 250px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  position: relative;
+  overflow: visible;
+}
 
-    #mainButton:active {
-      transform: scale(0.9);
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.6);
-    }
+#mainButton:active {
+  transform: scale(0.9);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.6);
+}
 
-    #shop {
-      background: gray;
-      color: white;
-      border: none;
-      border-radius: 15px;
-      padding: 15px 25px;
-      font-size: 20px;
-      margin: 10px;
-      cursor: pointer;
-      transition: transform 0.1s;
-    }
+#shop {
+  background: gray;
+  color: white;
+  border: none;
+  border-radius: 15px;
+  padding: 15px 25px;
+  font-size: 20px;
+  margin: 10px;
+  cursor: pointer;
+  transition: transform 0.1s;
+}
 
-    #shop:active {
-      transform: scale(0.95);
-    }
+#shop:active {
+  transform: scale(0.95);
+}
 
-    .skinButton {
-      background: gray;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      padding: 10px 15px;
-      font-size: 18px;
-      margin: 10px;
-      display: block;
-      width: 200px;
-      margin-left: auto;
-      margin-right: auto;
-      cursor: pointer;
-      transition: transform 0.1s;
-    }
+.skinButton {
+  background: gray;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 15px;
+  font-size: 18px;
+  margin: 10px;
+  display: block;
+  width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+  cursor: pointer;
+  transition: transform 0.1s;
+}
 
-    .skinButton:active {
-      transform: scale(0.95);
-    }
+.skinButton:active {
+  transform: scale(0.95);
+}
 
-    #clickPower {
-      font-size: 22px;
-      margin-bottom: 10px;
-    }
+#clickPower {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
 
-    .floating-text {
-      position: absolute;
-      color: #00ff00;
-      font-size: 22px;
-      animation: floatUp 1s ease-out forwards;
-      pointer-events: none;
-    }
+.floating-text {
+  position: absolute;
+  color: #00ff00;
+  font-size: 22px;
+  animation: floatUp 1s ease-out forwards;
+  pointer-events: none;
+}
 
-    @keyframes floatUp {
-      from { opacity: 1; transform: translateY(0); }
-      to { opacity: 0; transform: translateY(-60px); }
-    }
-  </style>
+@keyframes floatUp {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-60px); }
+}
+</style>
 </head>
 <body>
 
-  <div id="score">0</div>
-  <button id="mainButton" onclick="clickMain()">тик тик</button>
-  <div id="clickPower">Очков за клик: 1</div>
+<div id="score">0</div>
+<button id="mainButton" onclick="clickMain()">тик тик</button>
+<div id="clickPower">Очков за клик: 1</div>
 
+<div>
+  <button id="shop" onclick="buyUpgrade()">Купить апгрейд (+1) (25 очков)</button>
   <div>
-    <button id="shop" onclick="buyUpgrade()">Купить апгрейд (+1) (25 очков)</button>
-    <div>
-      <button class="skinButton" id="skinA" onclick="buyOrSelectSkin('Anton', 1500, 'friend.png')">Скин Антон (1500)</button>
-      <button class="skinButton" id="skinD" onclick="buyOrSelectSkin('Denis', 10000, 'denis.png')">Скин Денис (10000)</button>
-    </div>
+    <button class="skinButton" id="skinA" onclick="buyOrSelectSkin('Anton', 1500, 'friend.png')">Скин Антон (1500)</button>
+    <button class="skinButton" id="skinD" onclick="buyOrSelectSkin('Denis', 10000, 'denis.png')">Скин Денис (10000)</button>
   </div>
+</div>
 
-  <script>
-    let score = parseInt(localStorage.getItem("score")) || 0;
-    let upp = parseInt(localStorage.getItem("upp")) || 1;
-    let price = parseInt(localStorage.getItem("price")) || 25;
-    let ownedSkins = JSON.parse(localStorage.getItem("ownedSkins")) || {};
-    let currentSkin = localStorage.getItem("currentSkin") || null;
+<script>
+let score = parseInt(localStorage.getItem("score")) || 0;
+let upp = parseInt(localStorage.getItem("upp")) || 1;
+let price = parseInt(localStorage.getItem("price")) || 25;
+let ownedSkins = JSON.parse(localStorage.getItem("ownedSkins")) || {};
+let currentSkin = localStorage.getItem("currentSkin") || null;
 
-    const scoreLabel = document.getElementById("score");
-    const shopButton = document.getElementById("shop");
-    const mainButton = document.getElementById("mainButton");
-    const clickPower = document.getElementById("clickPower");
-    const skinButtons = {
-      'Anton': document.getElementById("skinA"),
-      'Denis': document.getElementById("skinD")
-    };
+const scoreLabel = document.getElementById("score");
+const shopButton = document.getElementById("shop");
+const mainButton = document.getElementById("mainButton");
+const clickPower = document.getElementById("clickPower");
 
-    scoreLabel.textContent = score;
+const skinButtons = {
+  'Anton': document.getElementById("skinA"),
+  'Denis': document.getElementById("skinD")
+};
+
+scoreLabel.textContent = score;
+shopButton.textContent = `Купить апгрейд (+1) (${price} очков)`;
+clickPower.textContent = `Очков за клик: ${upp}`;
+
+// Отображаем купленные скины на кнопках
+for (let skin in skinButtons) {
+  if (ownedSkins[skin]) {
+    skinButtons[skin].textContent = `${skin} ✅ Куплено`;
+  }
+}
+
+// Устанавливаем текущий скин на кнопке
+if (currentSkin) {
+  mainButton.style.backgroundImage = `url('${currentSkin}')`;
+  mainButton.textContent = "";
+  mainButton.style.backgroundColor = "white";
+}
+
+function createFloatingText(value) {
+  const text = document.createElement("div");
+  text.className = "floating-text";
+  text.textContent = `+${value}`;
+  text.style.left = Math.random() * 100 + 75 + "px";
+  text.style.bottom = "0";
+  mainButton.appendChild(text);
+  setTimeout(() => text.remove(), 1000);
+}
+
+function clickMain() {
+  score += upp;
+  scoreLabel.textContent = score;
+  createFloatingText(upp);
+  saveData();
+}
+
+function buyUpgrade() {
+  if (score >= price) {
+    score -= price;
+    upp += 1;
+    price = Math.round(price * 1.5);
     shopButton.textContent = `Купить апгрейд (+1) (${price} очков)`;
+    scoreLabel.textContent = score;
     clickPower.textContent = `Очков за клик: ${upp}`;
+    saveData();
+  }
+}
 
-    // Отобразить купленные скины при загрузке
-    for (let skin in ownedSkins) {
-      if (skinButtons[skin]) {
-        skinButtons[skin].textContent = `${skin} ✅ Куплено`;
-      }
-    }
-
-    if (currentSkin) {
-      mainButton.style.backgroundImage = `url('${currentSkin}')`;
-      mainButton.textContent = "";
-      mainButton.style.backgroundColor = "white";
-    }
-
-    // Всплывающий +1
-    function createFloatingText(value) {
-      const text = document.createElement("div");
-      text.className = "floating-text";
-      text.textContent = `+${value}`;
-      text.style.left = Math.random() * 100 + 75 + "px";
-      text.style.bottom = "0";
-      mainButton.appendChild(text);
-      setTimeout(() => text.remove(), 1000);
-    }
-
-    function clickMain() {
-      score += upp;
+function buyOrSelectSkin(name, cost, image) {
+  const button = skinButtons[name];
+  if (!ownedSkins[name]) {
+    if (score >= cost) {
+      score -= cost;
+      ownedSkins[name] = image;
+      button.textContent = `${name} ✅ Куплено`;
+      setSkin(image);
       scoreLabel.textContent = score;
-      createFloatingText(upp);
       saveData();
     }
+  } else {
+    setSkin(ownedSkins[name]);
+  }
+  // Обновляем отображение всех кнопок
+  for (let s in skinButtons) {
+    if (ownedSkins[s]) skinButtons[s].textContent = `${s} ✅ Куплено`;
+  }
+  saveData();
+}
 
-    function buyUpgrade() {
-      if (score >= price) {
-        score -= price;
-        upp += 1;
-        price = Math.round(price * 1.5);
-        shopButton.textContent = `Купить апгрейд (+1) (${price} очков)`;
-        scoreLabel.textContent = score;
-        clickPower.textContent = `Очков за клик: ${upp}`;
-        saveData();
-      }
-    }
+function setSkin(image) {
+  mainButton.style.backgroundImage = `url('${image}')`;
+  mainButton.textContent = "";
+  mainButton.style.backgroundColor = "white";
+  currentSkin = image;
+}
 
-    function buyOrSelectSkin(name, cost, image) {
-      const button = skinButtons[name];
-      if (!ownedSkins[name]) {
-        if (score >= cost) {
-          score -= cost;
-          ownedSkins[name] = image;
-          button.textContent = `${name} ✅ Куплено`;
-          setSkin(image);
-          scoreLabel.textContent = score;
-          saveData();
-        }
-      } else {
-        setSkin(ownedSkins[name]);
-        saveData();
-      }
-    }
-
-    function setSkin(image) {
-      mainButton.style.backgroundImage = `url('${image}')`;
-      mainButton.textContent = "";
-      mainButton.style.backgroundColor = "white";
-      currentSkin = image;
-    }
-
-    function saveData() {
-      localStorage.setItem("score", score);
-      localStorage.setItem("upp", upp);
-      localStorage.setItem("price", price);
-      localStorage.setItem("ownedSkins", JSON.stringify(ownedSkins));
-      localStorage.setItem("currentSkin", currentSkin);
-    }
-  </script>
+function saveData() {
+  localStorage.setItem("score", score);
+  localStorage.setItem("upp", upp);
+  localStorage.setItem("price", price);
+  localStorage.setItem("ownedSkins", JSON.stringify(ownedSkins));
+  localStorage.setItem("currentSkin", currentSkin);
+}
+</script>
 </body>
 </html>
