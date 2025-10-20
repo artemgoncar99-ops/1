@@ -25,7 +25,6 @@ body {
 
 #mainButton {
   margin: 0 auto;
-  background: green;
   color: white;
   font-size: 32px;
   border: none;
@@ -34,14 +33,14 @@ body {
   height: 60vw;
   max-width: 250px;
   max-height: 250px;
-  background-size: contain;
+  background-size: cover; /* Скин занимает всю кнопку */
   background-repeat: no-repeat;
   background-position: center;
   transition: transform 0.1s ease, box-shadow 0.1s ease;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
   cursor: pointer;
   position: relative;
-  overflow: visible;
+  overflow: hidden;
 }
 
 #mainButton:active {
@@ -115,6 +114,8 @@ body {
   <div>
     <button class="skinButton" id="skinA" onclick="buyOrSelectSkin('Anton', 1500, 'friend.png')">Скин Антон (1500)</button>
     <button class="skinButton" id="skinD" onclick="buyOrSelectSkin('Denis', 10000, 'denis.png')">Скин Денис (10000)</button>
+    <button class="skinButton" id="skinB" onclick="buyOrSelectSkin('Bogdan', 5000, 'bogdan.png')">Скин Bogdan (5000)</button>
+    <button class="skinButton" id="skinS" onclick="buyOrSelectSkin('Sergey', 2000, 'sergey.png')">Скин Sergey (2000)</button>
   </div>
 </div>
 
@@ -132,7 +133,9 @@ const clickPower = document.getElementById("clickPower");
 
 const skinButtons = {
   'Anton': document.getElementById("skinA"),
-  'Denis': document.getElementById("skinD")
+  'Denis': document.getElementById("skinD"),
+  'Bogdan': document.getElementById("skinB"),
+  'Sergey': document.getElementById("skinS")
 };
 
 scoreLabel.textContent = score;
@@ -188,7 +191,6 @@ function buyOrSelectSkin(name, cost, image) {
     if (score >= cost) {
       score -= cost;
       ownedSkins[name] = image;
-      button.textContent = `${name} ✅ Куплено`;
       setSkin(image);
       scoreLabel.textContent = score;
       saveData();
